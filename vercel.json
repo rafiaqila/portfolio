@@ -1,0 +1,7 @@
+{
+  "rewrites": [
+    { "source": "/articles/(.*)", "destination": "/articles/$1.html" }
+  ],
+  "cleanUrls": true,
+  "trailingSlash": false
+}
