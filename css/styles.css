@@ -567,6 +567,13 @@ button { font: inherit; border: none; cursor: pointer; background: none; }
   padding: var(--sp-2xl);
   display: flex;
   flex-direction: column;
+  text-decoration: none;
+  color: inherit;
+  transition: border-color 0.2s ease, transform 0.2s ease;
+}
+.cert-card:hover {
+  border-color: var(--ink);
+  transform: translateY(-2px);
 }
 .cert-card__issuer {
   display: flex;
