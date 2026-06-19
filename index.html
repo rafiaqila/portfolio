@@ -200,13 +200,17 @@
             <div class="project-details" hidden>
               <span class="modal__badge">1st Place, Synogize AISQL Innovation Challenge</span>
               <h3 class="modal__title">AISQL Site Safety Inspection</h3>
-              <p class="modal__desc">AI-powered site safety inspection app built entirely on Snowflake. Analyses construction site images to detect hazards, classify risks, generate safety scores, and recommend corrective actions. Shifts safety management from reactive to proactive.</p>
-              <p class="modal__label">Key features</p>
+              <p class="modal__desc">AI-powered site safety inspection app built entirely on Snowflake. Upload a photo from a construction site and get a hazard report, a risk score, and corrective action recommendations in seconds.</p>
+              <p class="modal__label">How it works</p>
               <ul class="modal__features">
-                <li>Automated hazard detection from uploaded construction site images using Snowflake Cortex AI functions</li>
-                <li>Risk classification with severity levels and per-site safety scoring</li>
-                <li>AI-generated corrective action recommendations for every detected hazard</li>
-                <li>End-to-end Streamlit app running natively inside Snowflake with no external infrastructure</li>
+                <li>The app takes a photo from a construction site and runs it through three Snowflake Cortex AI functions</li>
+                <li>AI_FILTER checks whether the image actually shows a hazard worth flagging</li>
+                <li>AI_CLASSIFY sorts the hazard into a category: missing PPE, unsafe scaffolding, blocked exits, and so on</li>
+                <li>AI_COMPLETE writes a plain language explanation of the risk and suggests what to do about it</li>
+                <li>Each site gets a running risk score out of 10, built from the history of flagged images at that location</li>
+                <li>The dashboard shows which sites are trending worse over time, not just a single snapshot</li>
+                <li>When a site crosses a risk threshold, the system sends an email automatically so the safety team finds out the same day instead of at a weekly review</li>
+                <li>Users can export a full report as HTML or pull a checklist as CSV for site audits</li>
               </ul>
               <p class="modal__label">Tech stack</p>
               <div class="modal__tech">
@@ -258,22 +262,46 @@
             <div class="project-details" hidden>
               <span class="modal__badge">Personal Project</span>
               <h3 class="modal__title">Tennis Tracker</h3>
-              <p class="modal__desc">Personal tennis data pipeline built on the GCP free tier, running under $1/month. Log sessions through a conversational Telegram bot, get AI coaching feedback from Gemini, and track progress on a Telegram Mini App dashboard.</p>
-              <p class="modal__label">Key features</p>
+              <p class="modal__desc">I play tennis two to three times a week and had no real way to tell if I was actually improving or just having good and bad days. So I built a system to track it properly.</p>
+              <p class="modal__label">Logging a session</p>
               <ul class="modal__features">
-                <li>Conversational session logging via a Telegram bot. No forms, just chat.</li>
-                <li>AI coaching feedback from Gemini based on logged session data</li>
-                <li>Telegram Mini App dashboard for tracking progress over time</li>
-                <li>BigQuery as the data warehouse, orchestrated with n8n and deployed via Docker</li>
-                <li>Entire stack runs on the GCP free tier for under $1/month</li>
+                <li>Typing /log on Telegram starts a short conversation</li>
+                <li>Asks about session type, location, skill ratings (serve, forehand, backhand, volley, footwork, focus, return), energy before and after, mood, discomfort, match result, and free text notes</li>
+                <li>About 15 data points per session, all saved to BigQuery</li>
+              </ul>
+              <p class="modal__label">AI coaching, three ways</p>
+              <ul class="modal__features">
+                <li>After every session, Gemini sends back a short coaching summary based on what was logged</li>
+                <li>Every Sunday, a weekly recap covering skill trends, energy patterns, and a plan for the week ahead</li>
+                <li>The /insights command pulls a 90 day report on demand, with skill trends, win and loss analysis, and recurring patterns</li>
+              </ul>
+              <p class="modal__label">Asking questions directly</p>
+              <ul class="modal__features">
+                <li>Free form questions like "what should I focus on this week" or "why have I been losing more matches lately"</li>
+                <li>Answers using full session history</li>
+                <li>Remembers earlier parts of the conversation, so follow up questions do not need repeated context</li>
+              </ul>
+              <p class="modal__label">Scheduling in plain English</p>
+              <ul class="modal__features">
+                <li>A message like "schedule match at Titiwangsa tomorrow 7pm against Fara" gets parsed automatically and added to Google Calendar</li>
+                <li>The night before, a pre session brief gets sent with focus areas, a quick game plan, notes from the last few sessions, and the weather forecast</li>
+              </ul>
+              <p class="modal__label">The dashboard</p>
+              <ul class="modal__features">
+                <li>A Telegram Mini App with four tabs</li>
+                <li>Overview: session counts, win and loss record, skill radar chart</li>
+                <li>Progress: skill trends over time with AI generated notes on what is improving and what needs work</li>
+                <li>Matches: win rate by opponent level, head to head records</li>
+                <li>Activity: 30 day heatmap of session frequency</li>
               </ul>
               <p class="modal__label">Tech stack</p>
               <div class="modal__tech">
+                <span class="chip"><img src="https://cdn.simpleicons.org/telegram/000000" alt="" onerror="this.style.display='none'">Telegram</span>
                 <span class="chip"><img src="https://cdn.simpleicons.org/n8n/000000" alt="" onerror="this.style.display='none'">n8n</span>
                 <span class="chip"><img src="https://cdn.simpleicons.org/googlebigquery/000000" alt="" onerror="this.style.display='none'">BigQuery</span>
                 <span class="chip"><img src="https://cdn.simpleicons.org/googlegemini/000000" alt="" onerror="this.style.display='none'">Gemini</span>
-                <span class="chip"><img src="https://cdn.simpleicons.org/telegram/000000" alt="" onerror="this.style.display='none'">Telegram</span>
-                <span class="chip"><img src="https://cdn.simpleicons.org/docker/000000" alt="" onerror="this.style.display='none'">Docker</span>
+                <span class="chip">Google Calendar</span>
+                <span class="chip"><img src="https://cdn.simpleicons.org/postgresql/000000" alt="" onerror="this.style.display='none'">PostgreSQL</span>
               </div>
               <div class="modal__links">
                 <a href="https://github.com/rafiaqila/tennis-tracker" target="_blank" rel="noopener" class="btn btn--primary btn--sm">
@@ -300,35 +328,44 @@
               <p class="project-desc">End-to-end operations automation for an Indonesian agribusiness company. AI WhatsApp chatbot, employee attendance, production &amp; inventory management, and three role-based monitoring dashboards.</p>
               <div class="project-tech">
                 <span class="chip"><img src="https://cdn.simpleicons.org/n8n/000000" alt="" onerror="this.style.display='none'">n8n</span>
-                <span class="chip"><img src="https://cdn.simpleicons.org/whatsapp/000000" alt="" onerror="this.style.display='none'">WhatsApp</span>
-                <span class="chip"><img src="https://cdn.simpleicons.org/supabase/000000" alt="" onerror="this.style.display='none'">Supabase</span>
+                <span class="chip"><img src="https://cdn.simpleicons.org/whatsapp/000000" alt="" onerror="this.style.display='none'">WhatsApp (WAHA)</span>
                 <span class="chip"><img src="https://cdn.jsdelivr.net/npm/simple-icons@latest/icons/openai.svg" alt="" onerror="this.style.display='none'">OpenAI</span>
-                <span class="chip"><img src="https://cdn.simpleicons.org/redis/000000" alt="" onerror="this.style.display='none'">Redis</span>
-                <span class="chip"><img src="https://cdn.simpleicons.org/postgresql/000000" alt="" onerror="this.style.display='none'">PostgreSQL</span>
                 <span class="chip"><img src="https://cdn.simpleicons.org/googlesheets/000000" alt="" onerror="this.style.display='none'">Google Sheets</span>
+                <span class="chip">Google Apps Script</span>
+                <span class="chip"><img src="https://cdn.simpleicons.org/telegram/000000" alt="" onerror="this.style.display='none'">Telegram</span>
               </div>
             </div>
             <div class="project-details" hidden>
               <span class="modal__badge">Client Project, Indonesian Agribusiness</span>
               <h3 class="modal__title">AI Chatbot &amp; Operations Automation</h3>
-              <p class="modal__desc">End-to-end operations automation for an Indonesian agribusiness company, replacing manual, paper-based processes with an AI WhatsApp chatbot and a connected data platform covering attendance, production, and inventory.</p>
-              <p class="modal__label">Key features</p>
+              <p class="modal__desc">This project is built with another developer in two phases for an agribusiness company in Indonesia that makes organic fertiliser and sells to business, government, and increasingly consumer customers across several countries.</p>
+              <p class="modal__label">Phase 1: the customer service chatbot</p>
               <ul class="modal__features">
-                <li>AI WhatsApp chatbot using RAG to answer questions grounded in the client's own product and business knowledge, with cross-session memory, debounce pattern, and AI agent tools</li>
-                <li>Employee attendance tracking through chat</li>
-                <li>Production and inventory management with structured data capture</li>
-                <li>Three role-based monitoring dashboards for owner, manager, and supervisor views</li>
-                <li>Delivered in two phases: core chatbot and database first, then expanded automation and reporting</li>
+                <li>Before this, field staff sent visit reports over WhatsApp that someone had to copy into a spreadsheet by hand, and there was no automated way to greet and qualify new customers before handing them to sales</li>
+                <li>The chatbot answers product questions using a knowledge base built from the company's own documents</li>
+                <li>It greets new customers and figures out what they need before passing qualified leads to the sales team through Telegram</li>
+                <li>The knowledge base started as a system prompt built directly from company documents, with a fallback plan to move to RAG if document volume grew past what a system prompt could handle well</li>
+                <li>The bot remembers returning customers by their WhatsApp number using a lightweight memory layer, so it does not treat every conversation as the first one</li>
+              </ul>
+              <p class="modal__label">Phase 2: internal operations</p>
+              <ul class="modal__features">
+                <li>This phase moved from customer facing to internal operations, covering employee attendance, all production and inventory reporting, incoming order tracking, and the monitoring dashboards</li>
+                <li>Attendance runs through WhatsApp with photo verification and live location, so HR can see who is on site without a separate form</li>
+                <li>Production and inventory covers raw materials coming in, materials being used, finished goods coming out, and stock leaving the warehouse, each tracked separately so stock levels update automatically</li>
+                <li>Incoming orders get an automatically generated order ID the moment they come in</li>
+                <li>Order status updates on its own as production reports reference that ID, moving from new order to in production to produced without anyone touching a spreadsheet</li>
+                <li>Three separate dashboards sit on top of all this: one for HR to see attendance, one for the production floor built for a TV display, and one for management with a full view across the operation</li>
               </ul>
               <p class="modal__label">Tech stack</p>
               <div class="modal__tech">
                 <span class="chip"><img src="https://cdn.simpleicons.org/n8n/000000" alt="" onerror="this.style.display='none'">n8n</span>
-                <span class="chip"><img src="https://cdn.simpleicons.org/whatsapp/000000" alt="" onerror="this.style.display='none'">WhatsApp</span>
-                <span class="chip"><img src="https://cdn.simpleicons.org/supabase/000000" alt="" onerror="this.style.display='none'">Supabase</span>
+                <span class="chip"><img src="https://cdn.simpleicons.org/whatsapp/000000" alt="" onerror="this.style.display='none'">WhatsApp API (WAHA)</span>
                 <span class="chip"><img src="https://cdn.jsdelivr.net/npm/simple-icons@latest/icons/openai.svg" alt="" onerror="this.style.display='none'">OpenAI</span>
+                <span class="chip"><img src="https://cdn.simpleicons.org/supabase/000000" alt="" onerror="this.style.display='none'">Supabase</span>
                 <span class="chip"><img src="https://cdn.simpleicons.org/redis/000000" alt="" onerror="this.style.display='none'">Redis</span>
                 <span class="chip"><img src="https://cdn.simpleicons.org/postgresql/000000" alt="" onerror="this.style.display='none'">PostgreSQL</span>
                 <span class="chip"><img src="https://cdn.simpleicons.org/googlesheets/000000" alt="" onerror="this.style.display='none'">Google Sheets</span>
+                <span class="chip">Google Apps Script</span>
               </div>
             </div>
           </div>
@@ -535,7 +572,6 @@
     <!-- ═══ ARTICLES ═══ -->
     <section class="section" id="articles">
       <div class="container">
-        <p class="section__eyebrow reveal">Writing</p>
         <h2 class="section__title reveal">Articles</h2>
         <div class="articles-grid reveal-stagger">
 
@@ -600,7 +636,7 @@
   <!-- ═══ FOOTER ═══ -->
   <footer class="footer section--dark">
     <div class="container footer__inner">
-      <p class="footer__copy">&copy; 2025 Rafi Aqila Hidayat</p>
+      <p class="footer__copy">&copy; 2026 Rafi Aqila Hidayat</p>
       <div class="footer__social">
         <a href="https://linkedin.com/in/raqilhidayat" target="_blank" rel="noopener" aria-label="LinkedIn">
           <svg viewBox="0 0 24 24" fill="currentColor"><path d="M20.447 20.452h-3.554v-5.569c0-1.328-.027-3.037-1.852-3.037-1.853 0-2.136 1.445-2.136 2.939v5.667H9.351V9h3.414v1.561h.046c.477-.9 1.637-1.85 3.37-1.85 3.601 0 4.267 2.37 4.267 5.455v6.286zM5.337 7.433a2.062 2.062 0 01-2.063-2.065 2.064 2.064 0 112.063 2.065zm1.782 13.019H3.555V9h3.564v11.452zM22.225 0H1.771C.792 0 0 .774 0 1.729v20.542C0 23.227.792 24 1.771 24h20.451C23.2 24 24 23.227 24 22.271V1.729C24 .774 23.2 0 22.222 0h.003z"/></svg>
