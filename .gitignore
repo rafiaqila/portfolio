@@ -2,3 +2,6 @@
 Thumbs.db
 *.log
 node_modules/
+.claude/
+DESIGN.md
+Rafi_Portfolio_Content.docx
